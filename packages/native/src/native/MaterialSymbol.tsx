@@ -19,13 +19,13 @@ import MaterialSymbolsSharp400 from '@react-navigation/native/assets/fonts/Mater
 import MaterialSymbolsSharp500 from '@react-navigation/native/assets/fonts/MaterialSymbolsSharp_500.woff2';
 import MaterialSymbolsSharp600 from '@react-navigation/native/assets/fonts/MaterialSymbolsSharp_600.woff2';
 import MaterialSymbolsSharp700 from '@react-navigation/native/assets/fonts/MaterialSymbolsSharp_700.woff2';
-import type { ImageSourcePropType, TextStyle } from 'react-native';
+import type { ImageSourcePropType, ViewStyle } from 'react-native';
 
 import { FONT_WEIGHTS } from './constants';
 import type { MaterialSymbolOptions } from './types';
 
 export type MaterialSymbolProps = MaterialSymbolOptions & {
-  style?: (React.CSSProperties & TextStyle) | undefined;
+  style?: (React.CSSProperties & ViewStyle) | undefined;
 };
 
 const VARIANTS = ['outlined', 'rounded', 'sharp'] as const;

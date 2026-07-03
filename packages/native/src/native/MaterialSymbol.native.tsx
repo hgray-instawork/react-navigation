@@ -1,8 +1,10 @@
-import { type ImageSourcePropType, type ViewProps } from 'react-native';
+import type { ImageSourcePropType, ViewStyle } from 'react-native';
 
 import type { MaterialSymbolOptions } from './types';
 
-export type MaterialSymbolProps = MaterialSymbolOptions & ViewProps;
+export type MaterialSymbolProps = MaterialSymbolOptions & {
+  style?: (React.CSSProperties & ViewStyle) | undefined;
+};
 
 export function MaterialSymbol(_: MaterialSymbolProps): React.ReactElement {
   throw new Error('MaterialSymbol is only supported on Android and Web.');

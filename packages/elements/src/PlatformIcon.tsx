@@ -5,15 +5,18 @@ import {
   type ImageStyle,
   type StyleProp,
   StyleSheet,
+  type ViewStyle,
 } from 'react-native';
 
 import type { Icon } from './types';
+
+export type PlatformIconStyle = React.CSSProperties & ImageStyle & ViewStyle;
 
 export type PlatformIconProps = {
   icon: Icon;
   size: number;
   color?: ColorValue | undefined;
-  style?: StyleProp<ImageStyle> | undefined;
+  style?: StyleProp<PlatformIconStyle> | undefined;
 };
 
 export function PlatformIcon({
