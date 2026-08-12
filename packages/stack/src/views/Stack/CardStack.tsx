@@ -506,7 +506,9 @@ export class CardStack extends React.Component<Props, State> {
         }
       }
 
-      activeStates = props.routes.map((_, index, self) => {
+      const focusedRouteKey = props.state.routes[props.state.index].key;
+
+      activeStates = props.routes.map((route, index, self) => {
         // The activity state represents state of the screen:
         // 0 - inactive, the screen is detached
         // 1 - transitioning or below the top screen, the screen is mounted but interaction is disabled
@@ -518,10 +520,15 @@ export class CardStack extends React.Component<Props, State> {
           | 2;
 
         const lastActiveState = state.activeStates[index];
-        const activeAfterTransition = index >= self.length - activeScreensLimit;
+        const isScreenFocused = route.key === focusedRouteKey;
+        const activeAfterTransition =
+          isScreenFocused || index >= self.length - activeScreensLimit;
 
-        if (lastActiveState === STATE_INACTIVE && !activeAfterTransition) {
-          // screen was inactive before and it will still be inactive after the transition
+        if (
+          (!isScreenFocused && index < self.length - activeScreensLimit - 1) ||
+          (lastActiveState === STATE_INACTIVE && !activeAfterTransition)
+        ) {
+          // screen is deeply covered, or was inactive and will remain inactive
           activityState = STATE_INACTIVE;
         } else {
           const sceneForActivity = scenes[self.length - 1];
@@ -529,7 +536,7 @@ export class CardStack extends React.Component<Props, State> {
             index === self.length - 1
               ? STATE_ON_TOP // the screen is on top after the transition
               : activeAfterTransition
-                ? STATE_TRANSITIONING_OR_BELOW_TOP // the screen should stay active after the transition, it is not on top but is in activeLimit
+                ? STATE_TRANSITIONING_OR_BELOW_TOP // the screen should stay active after the transition, it is focused or in activeLimit
                 : STATE_INACTIVE; // the screen should be active only during the transition, it is at the edge of activeLimit
 
           activityState = sceneForActivity
